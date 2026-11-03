@@ -1,0 +1,10 @@
+# Configuração de build/deploy da Netlify
+# Com este arquivo na raiz, a Netlify usa estas configurações automaticamente
+# em qualquer deploy conectado ao GitHub.
+
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "20"
