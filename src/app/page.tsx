@@ -1,8 +1,12 @@
 import Link from "next/link";
-import { paroquia } from "@/data/paroquia";
-import { missas, programacaoSemana } from "@/data/horarios";
-import { sacramentos } from "@/data/sacramentos";
-import { noticias, getDataFormatada } from "@/data/noticias";
+import { getDataFormatada } from "@/data/noticias";
+import {
+  getParoquia,
+  getMissas,
+  getProgramacao,
+  getSacramentos,
+  getNoticias,
+} from "@/lib/repositorio";
 
 const atalhos = [
   { href: "/vela-virtual", emoji: "🕯️", titulo: "Vela Virtual", texto: "Acenda uma vela com sua intenção" },
@@ -11,7 +15,15 @@ const atalhos = [
   { href: "/dizimo", emoji: "💛", titulo: "Seja Dizimista", texto: "Contribua com a missão da Igreja" },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [paroquia, missas, programacaoSemana, sacramentos, noticias] =
+    await Promise.all([
+      getParoquia(),
+      getMissas(),
+      getProgramacao(),
+      getSacramentos(),
+      getNoticias(),
+    ]);
   const avisos = noticias.filter((n) => n.categoria === "Aviso");
   const destaqueNoticias = noticias.filter((n) => n.categoria !== "Aviso").slice(0, 3);
 

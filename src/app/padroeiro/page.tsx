@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import { oracaoSaoPaulo } from "@/data/oracoes";
-import { paroquia } from "@/data/paroquia";
+import { getOracoes, getParoquia } from "@/lib/repositorio";
 
 export const metadata: Metadata = {
   title: "Nosso Padroeiro — São Paulo Apóstolo",
   description: "A vida de São Paulo Apóstolo, padroeiro da Paróquia de Pariquera-Açu/SP, e a oração a São Paulo.",
 };
 
-export default function PadroeiroPage() {
+export default async function PadroeiroPage() {
+  const [paroquia, oracoes] = await Promise.all([getParoquia(), getOracoes()]);
+  const oracaoSaoPaulo = oracoes.padroeiro;
   return (
     <>
       <PageHeader

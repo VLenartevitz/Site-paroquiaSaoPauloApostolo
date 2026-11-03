@@ -1,13 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { paroquia } from "@/data/paroquia";
 
 type Vela = { id: number; intencao: string };
 
 let contador = 0;
 
-export default function VelaVirtual() {
+export default function VelaVirtual({
+  telefone,
+  whatsappUrl,
+}: {
+  telefone: string;
+  whatsappUrl: string;
+}) {
   const [velas, setVelas] = useState<Vela[]>([]);
   const [intencao, setIntencao] = useState("");
 
@@ -90,10 +95,10 @@ export default function VelaVirtual() {
 
       <p className="mt-4 text-center text-xs text-slate-500">
         Suas intenções ficam apenas no seu aparelho (não são enviadas pela
-        internet). Para um pedido real de oração ligue para {paroquia.telefone}{" "}
+        internet). Para um pedido real de oração ligue para {telefone}{" "}
         ou{" "}
         <a
-          href={paroquia.whatsappUrl}
+          href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="text-brand-700 underline"

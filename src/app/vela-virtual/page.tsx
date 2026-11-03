@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
 import VelaVirtual from "@/components/VelaVirtual";
+import { getParoquia } from "@/lib/repositorio";
 
 export const metadata: Metadata = {
   title: "Vela Virtual",
   description: "Acenda uma vela virtual com sua intenção na Capela Virtual da Paróquia São Paulo Apóstolo de Pariquera-Açu/SP.",
 };
 
-export default function VelaVirtualPage() {
+export default async function VelaVirtualPage() {
+  const paroquia = await getParoquia();
   return (
     <>
       <PageHeader
@@ -16,7 +18,10 @@ export default function VelaVirtualPage() {
       />
 
       <section className="mx-auto max-w-3xl px-4 py-14">
-        <VelaVirtual />
+        <VelaVirtual
+          telefone={paroquia.telefone}
+          whatsappUrl={paroquia.whatsappUrl}
+        />
       </section>
     </>
   );

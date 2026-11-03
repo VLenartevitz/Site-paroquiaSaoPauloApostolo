@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import { pastorais } from "@/data/pastorais";
-import { paroquia } from "@/data/paroquia";
+import { getPastorais, getParoquia } from "@/lib/repositorio";
 
 export const metadata: Metadata = {
   title: "Pastorais e Movimentos",
   description: "Pastorais, movimentos e grupos de oração da Paróquia São Paulo Apóstolo de Pariquera-Açu/SP.",
 };
 
-export default function PastoraisPage() {
+export default async function PastoraisPage() {
+  const [paroquia, pastorais] = await Promise.all([
+    getParoquia(),
+    getPastorais(),
+  ]);
   return (
     <>
       <PageHeader

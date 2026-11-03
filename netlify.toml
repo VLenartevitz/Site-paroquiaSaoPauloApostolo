@@ -4,7 +4,10 @@
 
 [build]
   command = "npm run build"
-  publish = "out"
+  # Padrão de projetos Next.js na Netlify: o runtime oficial gera o deploy
+  # a partir da pasta .next (as chaves do Supabase vão em "Environment
+  # variables" das configurações do site, nunca neste arquivo).
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "20"

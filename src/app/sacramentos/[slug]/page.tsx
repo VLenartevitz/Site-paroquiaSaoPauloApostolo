@@ -2,18 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageHeader from "@/components/PageHeader";
-import { getSacramento, sacramentos } from "@/data/sacramentos";
-import { paroquia } from "@/data/paroquia";
-
-export function generateStaticParams() {
-  return sacramentos.map((s) => ({ slug: s.slug }));
-}
+import { getSacramento, getParoquia } from "@/lib/repositorio";
 
 export async function generateMetadata(
   props: PageProps<"/sacramentos/[slug]">
 ): Promise<Metadata> {
   const { slug } = await props.params;
-  const sacramento = getSacramento(slug);
+  const sacramento = await getSacramento(slug);
   if (!sacramento) return {};
   return {
     title: sacramento.nome,
@@ -40,7 +35,10 @@ export default async function SacramentoPage(
   props: PageProps<"/sacramentos/[slug]">
 ) {
   const { slug } = await props.params;
-  const sacramento = getSacramento(slug);
+  const [sacramento, paroquia] = await Promise.all([
+    getSacramento(slug),
+    getParoquia(),
+  ]);
   if (!sacramento) notFound();
 
   return (

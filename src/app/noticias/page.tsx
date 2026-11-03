@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import { noticias, getDataFormatada } from "@/data/noticias";
+import { getNoticias } from "@/lib/repositorio";
+import { getDataFormatada } from "@/data/noticias";
 
 export const metadata: Metadata = {
   title: "Notícias e Avisos",
   description: "Notícias, avisos e comunicados da Paróquia São Paulo Apóstolo de Pariquera-Açu/SP.",
 };
 
-export default function NoticiasPage() {
+export default async function NoticiasPage() {
+  const noticias = await getNoticias();
   const avisos = noticias.filter((n) => n.categoria === "Aviso");
   const demais = noticias.filter((n) => n.categoria !== "Aviso");
 

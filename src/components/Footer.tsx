@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { paroquia } from "@/data/paroquia";
-import { missas } from "@/data/horarios";
+import type { InfoParoquia } from "@/lib/repositorio";
+import { getMissas } from "@/lib/repositorio";
 
-export default function Footer() {
+export default async function Footer({ paroquia }: { paroquia: InfoParoquia }) {
+  const missas = await getMissas();
   return (
     <footer className="bg-brand-900 text-brand-100">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-3">

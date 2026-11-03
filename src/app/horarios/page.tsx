@@ -1,13 +1,24 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import { missas, confissoes, programacaoSemana, avisoHorarios } from "@/data/horarios";
+import {
+  getMissas,
+  getConfissoes,
+  getProgramacao,
+  avisoHorarios,
+} from "@/lib/repositorio";
 
 export const metadata: Metadata = {
   title: "Horários de Missas",
   description: "Horários de missas, confissões e programação da semana da Paróquia São Paulo Apóstolo, em Pariquera-Açu/SP.",
 };
 
-export default function HorariosPage() {
+export default async function HorariosPage() {
+  const [missas, confissoes, programacaoSemana] = await Promise.all([
+    getMissas(),
+    getConfissoes(),
+    getProgramacao(),
+  ]);
+
   return (
     <>
       <PageHeader

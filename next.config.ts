@@ -1,11 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Exportação estática (deploy em hospedagens como Netlify, hospedagens
-  // compartilhadas etc.). Os HTMLs finais são gerados na pasta `out/`.
-  output: "export",
-  // Gera cada página como "pasta/index.html" (ex.: horarios/index.html),
-  // formato que a Netlify e demais hospedagens estáticas servem nativamente.
+  // Modo servidor (necessário para o painel /admin + banco de dados).
+  // A cartel de páginas é mantida em cache pelo Next; edições do painel
+  // revalidam as páginas alteradas na hora.
   trailingSlash: true,
   // cacheComponents/partialPrefetching exigem servidor Node e não funcionam
   // com exportação estática — desativados de propósito.

@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import { paroquia, contatoCards } from "@/data/paroquia";
+import { getParoquia, montarContatoCards } from "@/lib/repositorio";
 
 export const metadata: Metadata = {
   title: "Contato e Secretaria",
   description: "Endereço, telefone, WhatsApp e horários da secretaria da Paróquia São Paulo Apóstolo de Pariquera-Açu/SP.",
 };
 
-export default function ContatoPage() {
+export default async function ContatoPage() {
+  const paroquia = await getParoquia();
+  const contatoCards = montarContatoCards(paroquia);
   return (
     <>
       <PageHeader

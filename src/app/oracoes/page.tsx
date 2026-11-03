@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import { oracoesBasicas, oracaoSaoPaulo } from "@/data/oracoes";
+import { getOracoes } from "@/lib/repositorio";
 
 export const metadata: Metadata = {
   title: "Orações",
   description: "Orações básicas da Igreja Católica e oração a São Paulo Apóstolo, padroeiro da paróquia de Pariquera-Açu/SP.",
 };
 
-export default function OracoesPage() {
+export default async function OracoesPage() {
+  const oracoes = await getOracoes();
+  const oracoesBasicas = oracoes.basicas;
+  const oracaoSaoPaulo = oracoes.padroeiro;
   return (
     <>
       <PageHeader

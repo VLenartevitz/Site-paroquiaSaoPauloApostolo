@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import { paroquia } from "@/data/paroquia";
+import { getParoquia } from "@/lib/repositorio";
 
 export const metadata: Metadata = {
   title: "Seja Dizimista",
   description: "Seja dizimista da Paróquia São Paulo Apóstolo de Pariquera-Açu/SP: contribua com a manutenção das celebrações, ações pastorais e obras sociais.",
 };
 
-export default function DizimoPage() {
+export default async function DizimoPage() {
+  const paroquia = await getParoquia();
   return (
     <>
       <PageHeader

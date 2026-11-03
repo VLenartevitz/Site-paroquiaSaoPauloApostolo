@@ -1,7 +1,11 @@
-import { paroquia } from "@/data/paroquia";
+import type { InfoParoquia } from "@/lib/repositorio";
 
 /** Botão flutuante de WhatsApp presente em todas as páginas */
-export default function BotaoWhatsApp() {
+export default function BotaoWhatsApp({
+  paroquia,
+}: {
+  paroquia: InfoParoquia;
+}) {
   return (
     <a
       href={paroquia.whatsappUrl}

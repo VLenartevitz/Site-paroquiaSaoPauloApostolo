@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import { comunidades, notaComunidades } from "@/data/comunidades";
-import { paroquia } from "@/data/paroquia";
+import { getComunidades, getParoquia } from "@/lib/repositorio";
 
 export const metadata: Metadata = {
   title: "Comunidades e Capelas",
   description: "Igreja Matriz e capelas da Paróquia São Paulo Apóstolo de Pariquera-Açu/SP.",
 };
 
-export default function ComunidadesPage() {
+export default async function ComunidadesPage() {
+  const [paroquia, comunidadesDoc] = await Promise.all([
+    getParoquia(),
+    getComunidades(),
+  ]);
+  const comunidades = comunidadesDoc.lista;
+  const notaComunidades = comunidadesDoc.nota;
   return (
     <>
       <PageHeader

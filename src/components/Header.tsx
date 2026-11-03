@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { paroquia } from "@/data/paroquia";
+import type { InfoParoquia } from "@/lib/repositorio";
 
 type NavItem = {
   label: string;
@@ -48,7 +48,13 @@ const nav: NavItem[] = [
   },
 ];
 
-function Logo({ className = "" }: { className?: string }) {
+function Logo({
+  paroquia,
+  className = "",
+}: {
+  paroquia: InfoParoquia;
+  className?: string;
+}) {
   return (
     <Link href="/" className={`flex items-center gap-3 ${className}`}>
       <svg
@@ -87,7 +93,7 @@ function isActive(pathname: string, item: NavItem): boolean {
   return pathname.startsWith(item.href);
 }
 
-export default function Header() {
+export default function Header({ paroquia }: { paroquia: InfoParoquia }) {
   const pathname = usePathname();
   const [aberto, setAberto] = useState(false);
 
@@ -131,7 +137,7 @@ export default function Header() {
       {/* Barra principal */}
       <div className="border-b border-brand-100 bg-white/95 shadow-sm backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <Logo />
+          <Logo paroquia={paroquia} />
 
           {/* Navegação desktop */}
           <nav className="hidden items-center lg:flex">

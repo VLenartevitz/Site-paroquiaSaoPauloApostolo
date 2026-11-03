@@ -4,9 +4,11 @@ Site oficial da Paróquia São Paulo Apóstolo, em Pariquera-Açu – SP, perten
 
 ## Tecnologia
 
-- [Next.js 16](https://nextjs.org) (App Router) + TypeScript
+- [Next.js 16](https://nextjs.org) (App Router, modo servidor) + TypeScript
 - [Tailwind CSS 4](https://tailwindcss.com)
-- Sem backend: todo o conteúdo fica em arquivos de dados em `src/data/`
+- **Supabase** (opcional) — banco de dados para o futuro painel `/admin`
+- Conteúdo em `src/data/` serve como **fallback**: enquanto o Supabase não
+  estiver configurado, o site funciona normalmente com esses dados
 
 ## Como rodar
 
@@ -27,53 +29,46 @@ npm start
 ```
 src/
   app/              → páginas do site (rotas) + sitemap/robots
-    page.tsx        → Início
-    /horarios       → Missas, confissões e programação da semana
-    /paroquia       → História e clero
-    /padroeiro      → Vida de São Paulo Apóstolo
-    /comunidades    → Matriz e capelas
-    /sacramentos    → Batismo, Eucaristia, Crisma, Matrimônio, Confissão, Unção
-    /pastorais      → Pastorais e movimentos
-    /noticias       → Notícias e avisos
-    /oracoes        → Orações tradicionais + oração ao padroeiro
-    /vela-virtual   → Capela virtual (acender vela com intenção)
-    /dizimo         → Seja dizimista
-    /contato        → Secretaria, telefone, WhatsApp e mapa
+    /admin (futuro) → painel de edição protegido por login
   components/       → Header, Footer, PageHeader, VelaVirtual, BotaoWhatsApp
-  data/             → CONTEÚDO EDITÁVEL (ver abaixo)
+  lib/
+    supabase.ts     → cliente do banco (server-side)
+    repositorio.ts  → camada de dados: lê do Supabase com fallback para dados
+                      locais
+  db/
+    schema.sql      → schema das tabelas (rodar no SQL Editor do Supabase)
+  data/             → CONTEÚDO PADRÃO/fallback (ver tabela abaixo)
+scripts/
+  seed.mts          → sobe o conteúdo de src/data/ para o Supabase (npm run db:seed)
 ```
 
-## Como atualizar o conteúdo ⚠️
+## Configurando o Supabase (painel admin)
 
-Todo o conteúdo está centralizado em `src/data/` e marcado com `⚠️ PLACEHOLDER`:
+1. Crie o projeto gratuitamente em supabase.com (região São Paulo)
+2. **Project Settings → API**: copie `Project URL` e `service_role key`
+3. Copie `.env.example` → `.env.local` e preencha:
+   - `SUPABASE_URL`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+4. Rode o `schema.sql` (src/db/schema.sql) no **SQL Editor** do Supabase
+5. Sow o conteúdo: `npm run db:seed`
+6. Na Netlify: **Site configuration → Environment variables** → cadastre as
+   mesmas duas chaves (nunca as suba ao GitHub)
 
-| Arquivo          | O que contém                                                        |
-| ---------------- | ------------------------------------------------------------------- |
-| `paroquia.ts`    | Nome, endereço, telefone, redes, pároco, horário da secretaria       |
-| `horarios.ts`    | Horários de missas, confissões e programação da semana (placeholders)|
-| `sacramentos.ts` | Orientações de agendamento e documentos de cada sacramento           |
-| `pastorais.ts`   | Lista de pastorais/movimentos ativos e seus encontros                |
-| `comunidades.ts` | Matriz e capelas da paróquia                                         |
-| `noticias.ts`    | Notícias e avisos (exemplos de demonstração)                         |
-| `oracoes.ts`     | Orações básicas e oração a São Paulo Apóstolo                        |
+As contas dos membros da pastoral ficam em **Authentication → Users** do
+Supabase (e-mail + senha) e o `/admin` sempre verificará essas contas.
 
-Depois de editar, salve o arquivo — em modo `dev` as alterações aparecem na hora;
-em produção, rode `npm run build` novamente.
+## Deploy (Netlify)
 
-## Deploy (Netlify ou hospedagem estática)
-
-O site usa **exportação estática** (`output: "export"` em `next.config.ts`).
-`npm run build` gera a pasta `out/` com HTMLs prontos.
-
-Configuração na Netlify (Site settings → Build & deploy):
+Camada de build definida pelo `netlify.toml`:
 
 | Campo            | Valor            |
 | ---------------- | ---------------- |
 | Build command    | `npm run build`  |
-| Publish directory| `out`            |
+| Publish directory| `.next`          |
 
-Qualquer hospedagem estática serve a pasta `out/` (o site é 100% HTML/CSS/JS
-estático, sem servidor Node).
+⚠️ O site agora é **dinâmico** (modo servidor do Next.js). A Netlify detecta
+Next.js e aplica o runtime oficial automaticamente. Se um deploy falhar, o
+site anterior continua no ar.
 
 ## Dados reais já confirmados
 

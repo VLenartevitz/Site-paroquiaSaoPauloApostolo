@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
-import { paroquia } from "@/data/paroquia";
+import { getParoquia } from "@/lib/repositorio";
 
 export const metadata: Metadata = {
   title: "Nossa Paróquia",
   description: "História, pároco e vida da Paróquia São Paulo Apóstolo de Pariquera-Açu/SP, da Diocese de Registro.",
 };
 
-export default function ParoquiaPage() {
+export default async function ParoquiaPage() {
+  const paroquia = await getParoquia();
   return (
     <>
       <PageHeader

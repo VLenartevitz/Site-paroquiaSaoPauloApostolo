@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
-import { sacramentos } from "@/data/sacramentos";
+import { getSacramentos } from "@/lib/repositorio";
 
 export const metadata: Metadata = {
   title: "Sacramentos",
   description: "Orientações para agendar Batismo, Eucaristia, Crisma, Matrimônio, Confissão e Unção dos Enfermos na Paróquia São Paulo Apóstolo de Pariquera-Açu/SP.",
 };
 
-export default function SacramentosPage() {
+export default async function SacramentosPage() {
+  const sacramentos = await getSacramentos();
   return (
     <>
       <PageHeader
