@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+/* Paleta da identidade: azul profundo (fé/tradição) + dourado (liturgia) */
+@theme {
+  --color-brand-50: #eef4fa;
+  --color-brand-100: #d9e6f2;
+  --color-brand-200: #b3cbe4;
+  --color-brand-300: #84a9cd;
+  --color-brand-400: #5587b2;
+  --color-brand-500: #37699a;
+  --color-brand-600: #275280;
+  --color-brand-700: #1e4068;
+  --color-brand-800: #183052;
+  --color-brand-900: #122134;
+  --color-brand-950: #0b1523;
+
+  --color-gold-200: #f3e3b3;
+  --color-gold-300: #e9d08a;
+  --color-gold-400: #ddb95f;
+  --color-gold-500: #cda23c;
+  --color-gold-600: #b0862c;
+  --color-gold-700: #8c6823;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+}
+
+/* Títulos com serifa tipográfica (identidade das páginas) */
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-cormorant), Georgia, "Times New Roman", serif;
+}
+
+/* Chama animada da Vela Virtual */
+@keyframes chama {
+  0%,
+  100% {
+    transform: scaleY(1) scaleX(1);
+    opacity: 0.95;
+  }
+  30% {
+    transform: scaleY(1.18) scaleX(0.9);
+    opacity: 1;
+  }
+  55% {
+    transform: scaleY(0.92) scaleX(1.06);
+    opacity: 0.9;
+  }
+}
+
+.flame {
+  transform-origin: bottom center;
+  animation: chama 1.1s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(255, 180, 60, 0.65));
+}
