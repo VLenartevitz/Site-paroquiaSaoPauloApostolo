@@ -60,6 +60,21 @@ Todo o conteúdo está centralizado em `src/data/` e marcado com `⚠️ PLACEHO
 Depois de editar, salve o arquivo — em modo `dev` as alterações aparecem na hora;
 em produção, rode `npm run build` novamente.
 
+## Deploy (Netlify ou hospedagem estática)
+
+O site usa **exportação estática** (`output: "export"` em `next.config.ts`).
+`npm run build` gera a pasta `out/` com HTMLs prontos.
+
+Configuração na Netlify (Site settings → Build & deploy):
+
+| Campo            | Valor            |
+| ---------------- | ---------------- |
+| Build command    | `npm run build`  |
+| Publish directory| `out`            |
+
+Qualquer hospedagem estática serve a pasta `out/` (o site é 100% HTML/CSS/JS
+estático, sem servidor Node).
+
 ## Dados reais já confirmados
 
 - Endereço: Rua João Araujo Rangel, 82 – Pariquera-Açu/SP

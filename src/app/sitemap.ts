@@ -1,5 +1,8 @@
 import type { MetadataRoute } from "next";
 
+// Necessário para "output: export"
+export const dynamic = "force-static";
+
 // TODO: trocar pela URL definitiva quando o domínio do site for definido
 const SITE_URL = "https://saopauloapostolopariquera.exemplo.com.br";
 
