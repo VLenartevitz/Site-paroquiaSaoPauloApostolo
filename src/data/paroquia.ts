@@ -8,7 +8,7 @@
  */
 export const paroquia = {
   nome: "Paróquia São Paulo Apóstolo",
-  lema: "Uma comunidade de fé, esperança e caridade",
+  lema: "Uma comunidade de fé, esperança e caridadeeeeeeeeeeeeeeeeee",
   cidade: "Pariquera-Açu",
   estado: "SP",
   diocese: "Diocese de Registro",
