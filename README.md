@@ -52,10 +52,20 @@ scripts/
 4. Rode o `schema.sql` (src/db/schema.sql) no **SQL Editor** do Supabase
 5. Sow o conteúdo: `npm run db:seed`
 6. Na Netlify: **Site configuration → Environment variables** → cadastre as
-   mesmas duas chaves (nunca as suba ao GitHub)
+   mesmas duas chaves e a `ADMIN_PASSWORD` (nunca as suba ao GitHub)
 
-As contas dos membros da pastoral ficam em **Authentication → Users** do
-Supabase (e-mail + senha) e o `/admin` sempre verificará essas contas.
+## Painel /admin
+
+O painel em `/admin` permite editar o conteúdo do site pelo navegador:
+
+- **Login por senha** com a variável de ambiente `ADMIN_PASSWORD`
+  (sessão em cookie httpOnly, válida por 30 dias)
+- Seções editáveis: dados da paróquia, horários (missas/confissões/
+  programação), notícias, sacramentos, pastorais, comunidades e orações
+- Ao salvar, o conteúdo vai para a tabela `config` no Supabase e as
+  páginas públicas são revalidadas na hora
+- Sem o Supabase configurado, o painel avisa e não salva (o site fica
+  no ar com o conteúdo padrão de `src/data/`)
 
 ## Deploy (Netlify)
 

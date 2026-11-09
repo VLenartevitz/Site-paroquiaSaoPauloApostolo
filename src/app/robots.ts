@@ -8,6 +8,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      // painel de administração não é indexado
+      disallow: "/admin",
     },
   };
 }
