@@ -10,4 +10,10 @@
   publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "20"
+  # Supabase (auth-js, supabase-js) exige Node 22+
+  NODE_VERSION = "22"
+
+# Sem este plugin a Netlify sobe o .next como arquivos estáticos e todas as
+# rotas dão 404. O plugin do Next cria as functions e as rotas do modo servidor.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
