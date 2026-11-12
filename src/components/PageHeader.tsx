@@ -14,7 +14,7 @@ export default function PageHeader({ titulo, subtitulo }: PageHeaderProps) {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold-400 to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-gold-400 to-transparent"
       />
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-18">
         <h1 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">

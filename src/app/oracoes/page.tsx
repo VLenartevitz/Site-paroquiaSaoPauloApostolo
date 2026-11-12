@@ -20,7 +20,7 @@ export default async function OracoesPage() {
 
       <section className="mx-auto max-w-4xl px-4 py-14">
         {/* Padroeiro em destaque */}
-        <article className="rounded-2xl bg-gradient-to-br from-brand-900 to-brand-700 p-8 text-white shadow-sm">
+        <article className="rounded-2xl bg-linear-to-br from-brand-900 to-brand-700 p-8 text-white shadow-sm">
           <h2 className="font-display text-3xl font-semibold text-gold-300">
             {oracaoSaoPaulo.titulo}
           </h2>

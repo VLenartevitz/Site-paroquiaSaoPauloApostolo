@@ -1,9 +1,10 @@
 /**
  * Horários de missas, confissões e programação da semana.
  *
- * ⚠️ PLACEHOLDER: os horários abaixo são ilustrativos. Os horários oficiais
- *    ainda não estavam publicados. Confirme com a secretaria e ajuste aqui —
- *    este é o único lugar que precisa ser editado.
+ * ⚠️ PLACEHOLDER: os horários abaixo são ilustrativos. Confirme os horários
+ *    oficiais com a secretaria antes de atualizá-los.
+ *    Sem Supabase, edite o array `missas` abaixo. Com Supabase configurado,
+ *    atualize também o documento `config` com a chave `missas`.
  */
 
 export type Missa = {
@@ -16,7 +17,7 @@ export const missas: Missa[] = [
   { dia: "Terça-feira", horarios: ["19h"] },
   { dia: "Quinta-feira", horarios: ["19h30"] },
   { dia: "Sábado", horarios: ["19h"], observacao: "Missa das Famílias (veja avisos)" },
-  { dia: "Domingo", horarios: ["8h", "19h"] },
+  { dia: "Domingo", horarios: ["9h", "19h"] },
 ];
 
 export const confissoes: string[] = [
@@ -32,7 +33,7 @@ export type ProgramacaoDia = {
 export const programacaoSemana: ProgramacaoDia[] = [
   {
     dia: "Domingo",
-    itens: ["Santa Missa – 8h", "Santa Missa – 19h"],
+    itens: ["Santa Missa – 9h", "Santa Missa – 19h"],
   },
   {
     dia: "Segunda-feira",

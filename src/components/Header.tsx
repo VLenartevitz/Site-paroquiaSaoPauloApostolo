@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import type { InfoParoquia } from "@/lib/repositorio";
 
 type NavItem = {
@@ -95,7 +94,6 @@ function isActive(pathname: string, item: NavItem): boolean {
 
 export default function Header({ paroquia }: { paroquia: InfoParoquia }) {
   const pathname = usePathname();
-  const [aberto, setAberto] = useState(false);
 
   return (
     <header className="sticky top-0 z-50">
@@ -191,71 +189,101 @@ export default function Header({ paroquia }: { paroquia: InfoParoquia }) {
             </a>
           </nav>
 
-          {/* Botão do menu mobile */}
-          <button
-            type="button"
-            aria-label="Abrir menu"
-            aria-expanded={aberto}
-            onClick={() => setAberto((v) => !v)}
-            className="rounded-lg p-2 text-brand-800 hover:bg-brand-50 lg:hidden"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              {aberto ? (
-                <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-              ) : (
+          <details className="group relative lg:hidden">
+            <summary
+              aria-label="Abrir ou fechar menu"
+              className="list-none cursor-pointer rounded-lg p-2 text-brand-800 hover:bg-brand-50"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
-              )}
-            </svg>
-          </button>
-        </div>
+              </svg>
+            </summary>
 
-        {/* Menu mobile */}
-        {aberto && (
-          <nav className="border-t border-brand-100 bg-white lg:hidden">
-            <ul className="mx-auto max-w-6xl divide-y divide-brand-50 px-4 py-2">
-              {nav.map((item) => (
-                <li key={item.label} className="py-1">
-                  <Link
-                    href={item.href}
-                    onClick={() => setAberto(false)}
-                    className={`block rounded-lg px-3 py-2 text-sm font-medium ${
-                      isActive(pathname, item)
-                        ? "bg-brand-50 text-brand-800"
-                        : "text-slate-700"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                  {item.children && (
-                    <ul className="ml-3 border-l border-brand-100 pl-3">
-                      {item.children.map((sub) => (
-                        <li key={sub.href}>
-                          <Link
-                            href={sub.href}
-                            onClick={() => setAberto(false)}
-                            className="block rounded-lg px-3 py-2 text-sm text-slate-600 hover:text-brand-800"
+            {/* Menu mobile */}
+            <nav className="absolute right-0 top-full z-50 mt-2 max-h-[calc(100dvh-5rem)] w-[calc(20rem-15px)] max-w-[calc(100vw-2.9375rem)] touch-pan-y overflow-y-auto overscroll-contain rounded-xl border border-brand-100 bg-white shadow-xl lg:hidden">
+              <ul className="divide-y divide-brand-50 px-4 py-2">
+                {nav.map((item) => (
+                  <li key={item.label} className="py-1">
+                    {item.children && (
+                      <div className="flex items-center gap-2">
+                        <Link
+                          href={item.href}
+                          className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-transform hover:-translate-y-0.5 active:-translate-y-0.5 ${
+                            isActive(pathname, item)
+                              ? "bg-brand-50 text-brand-800"
+                              : "text-slate-700 hover:bg-brand-50 hover:text-brand-800"
+                          }`}
+                        >
+                          {item.label}
+                        </Link>
+                        <details className="mobile-submenu">
+                          <summary
+                            aria-label={`Alternar links de ${item.label}`}
+                            className="list-none cursor-pointer rounded-full bg-gold-500 p-2 text-brand-900 shadow-sm transition-transform hover:-translate-y-0.5 hover:bg-gold-400 active:-translate-y-0.5 [&::-webkit-details-marker]:hidden"
                           >
-                            {sub.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              aria-hidden="true"
+                              className="mobile-submenu-arrow transition-transform duration-200"
+                            >
+                              <path
+                                d="m3 6 5 5 5-5"
+                                stroke="currentColor"
+                                strokeWidth="1.8"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </summary>
+                          <ul
+                            aria-label={`Links de ${item.label}`}
+                            className="ml-3 mt-2 max-h-40 overflow-y-auto overscroll-contain rounded-lg border border-brand-100 bg-slate-50/70 p-1"
+                          >
+                            {item.children.map((sub) => (
+                              <li key={sub.href}>
+                                <Link
+                                  href={sub.href}
+                                  className="block rounded-lg px-3 py-2 text-sm text-slate-600 transition-transform hover:-translate-y-0.5 hover:bg-brand-50 hover:text-brand-800 active:-translate-y-0.5"
+                                >
+                                  {sub.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </details>
+                      </div>
+                    )}
+                    {!item.children && (
+                      <Link
+                        href={item.href}
+                        className={`block rounded-lg px-3 py-2 text-sm font-medium transition-transform hover:-translate-y-0.5 active:-translate-y-0.5 ${
+                          isActive(pathname, item)
+                            ? "bg-brand-50 text-brand-800"
+                            : "text-slate-700 hover:bg-brand-50 hover:text-brand-800"
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+                <li className="py-3">
+                  <a
+                    href={paroquia.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded-lg bg-gold-500 px-4 py-2.5 text-center text-sm font-semibold text-brand-900 transition-transform hover:-translate-y-0.5 hover:bg-gold-400 active:-translate-y-0.5"
+                  >
+                    Fale conosco no WhatsApp
+                  </a>
                 </li>
-              ))}
-              <li className="py-3">
-                <a
-                  href={paroquia.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block rounded-lg bg-gold-500 px-4 py-2.5 text-center text-sm font-semibold text-brand-900"
-                >
-                  Fale conosco no WhatsApp
-                </a>
-              </li>
-            </ul>
-          </nav>
-        )}
+              </ul>
+            </nav>
+          </details>
+        </div>
       </div>
     </header>
   );

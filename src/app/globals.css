@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
+/* Classes bg-linear-to-* usam a sintaxe canônica de gradiente do Tailwind CSS v4. */
 /* Paleta da identidade: azul profundo (fé/tradição) + dourado (liturgia) */
 @theme {
   --color-brand-50: #eef4fa;
-  --color-brand-100: #d9e6f2;
+  --color-brand-100: #e9d08a;
   --color-brand-200: #b3cbe4;
   --color-brand-300: #84a9cd;
   --color-brand-400: #5587b2;
@@ -12,14 +13,17 @@
   --color-brand-700: #1e4068;
   --color-brand-800: #183052;
   --color-brand-900: #122134;
-  --color-brand-950: #0b1523;
+  /*--color-brand-950: #0b1523;*/
 
   --color-gold-200: #f3e3b3;
-  --color-gold-300: #e9d08a;
+  --color-gold-300: #d9e6f2;
   --color-gold-400: #ddb95f;
   --color-gold-500: #cda23c;
   --color-gold-600: #b0862c;
   --color-gold-700: #8c6823;
+
+  /* Altere esta variável para substituir a cor do quadradinho ao passar o mouse. */
+  --color-missa-hover: #99bff0;
 }
 
 html {
@@ -28,6 +32,24 @@ html {
 
 body {
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+}
+
+.mobile-submenu[open] > summary .mobile-submenu-arrow {
+  transform: rotate(180deg);
+}
+
+/* No desktop, a imagem quadrada cabe inteira na altura do bloco e fica alinhada à direita. */
+.hero-title-background {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 64rem) {
+  .hero-title-background {
+    background-size: 100% 100%, auto 100%;
+    background-position: center, right center;
+  }
 }
 
 /* Títulos com serifa tipográfica (identidade das páginas) */
